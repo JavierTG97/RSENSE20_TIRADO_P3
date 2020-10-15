@@ -17,8 +17,14 @@
 
 ### Gráficas obtenidas con el último ejercicio:
 
+**Inicio (reposo)**:
+
 ![Inicio (reposo)](https://github.com/JavierTG97/RSENSE20_TIRADO_P3/blob/master/Im%C3%A1genes/Inicio.png?raw=true)
 
+**Cambios en la aceleración**:
+
 ![Cambios](https://github.com/JavierTG97/RSENSE20_TIRADO_P3/blob/master/Im%C3%A1genes/Alteracion.png?raw=true)
+
+**Vuelta al reposo**:
 
 ![Vuelta al reposo](https://github.com/JavierTG97/RSENSE20_TIRADO_P3/blob/master/Im%C3%A1genes/Reposo.png?raw=true)
