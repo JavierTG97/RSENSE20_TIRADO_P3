@@ -48,7 +48,7 @@ def plotear(i, temp, AcelXmean, AcelYmean, AcelZmean, Anormamean):
             AcelZstd.append(df["AcelZ"].std());   Anormastd.append(df["Norma"].std())
             
             #Actualizamos eje X común
-            temp.append(tiempoActual)
+            temp.append(tiempoActual-tiempoCero)
             
             #Limpiamos la gráfica anterior para plotear una encima sin problemas:
             ax.clear()
