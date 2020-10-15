@@ -4,40 +4,43 @@ import numpy as np
 import matplotlib.pyplot as plt
 from drawnow import *
 
-#plt.style.use('ggplot')
-
+plt.style.use('ggplot')
 
 # --------------- FUNCION PARA CREAR LAS FIGURAS ---------------------
 
 def FigsAceleraciones():
     plt.subplot(2,2,1)
     plt.ylim(-2,2)
-    plt.title('Aceleración en X')
-    plt.ylabel('Valor [g]')
+    plt.title('Aceleración en X', fontsize=12, fontweight='bold', color='k')
+    plt.ylabel('Valor [g]', fontsize=12, fontweight='bold', color='k')
+    plt.xlabel('Tiempo [s]', fontsize=12, fontweight='bold', color='k')
     plt.plot(temp, AcelXmean, label = 'media')
     plt.plot(temp, AcelXstd, label = 'desv. est.')
     plt.legend()
     
     plt.subplot(2,2,2)
     plt.ylim(-2,2)
-    plt.title('Aceleración en Y')
-    plt.ylabel('Valor [g]')
+    plt.title('Aceleración en Y', fontsize=12, fontweight='bold', color='k')
+    plt.ylabel('Valor [g]', fontsize=12, fontweight='bold', color='k')
+    plt.xlabel('Tiempo [s]', fontsize=12, fontweight='bold', color='k')
     plt.plot(temp, AcelYmean, label = 'media')
     plt.plot(temp, AcelYstd, label = 'desv. est.')
     plt.legend()
     
     plt.subplot(2,2,3)
     plt.ylim(-2,2)
-    plt.title('Aceleración en Z')
-    plt.ylabel('Valor [g]')
+    plt.title('Aceleración en Z', fontsize=12, fontweight='bold', color='k')
+    plt.ylabel('Valor [g]', fontsize=12, fontweight='bold', color='k')
+    plt.xlabel('Tiempo [s]', fontsize=12, fontweight='bold', color='k')
     plt.plot(temp, AcelZmean, label = 'media')
     plt.plot(temp, AcelZstd, label = 'desv. est.')
     plt.legend()
     
     plt.subplot(2,2,4)
     plt.ylim(-2,2)
-    plt.title('Norma de la aceleración')
-    plt.ylabel('Valor [g]')
+    plt.title('Norma de la aceleración', fontsize=12, fontweight='bold', color='k')
+    plt.ylabel('Valor [g]', fontsize=12, fontweight='bold', color='k')
+    plt.xlabel('Tiempo [s]', fontsize=12, fontweight='bold', color='k')
     plt.plot(temp, Anormamean, label = 'media')
     plt.plot(temp, Anormastd, label = 'desv. est.')
     plt.legend()
@@ -109,28 +112,35 @@ tiempoCero = time.time()
 tiempoTomadeDatos = 5.0 #segundos
 
 while True:
-     while (SerialArduino.inWaiting()==0): #Wait here until there is data
-         pass #do nothing
+     while (SerialArduino.inWaiting()==0): #Espera aquí hasta que lleguen datos
+         pass #pass -> una vez que llegan datos, continua al código de debajo
      
+     #Variables para controlar el tiempo de recogida de datos:
      tiempoInicio = time.time()
      tiempoActual = tiempoInicio
      while (tiempoTomadeDatos >= (tiempoActual - tiempoInicio)):
          val = SerialArduino.readline().decode('ascii')
          
+         #Descomponemos la info del sensor en cada una de las variables
          data = val.split(';')
          AcelX.append(data[0])
          AcelY.append(data[1])
          AcelZ.append(data[2])
          Anorma.append(data[3])        
-
+         
+         #Si queremos escribir un CSV o TXT:
          val2 = val.rstrip("\r\n")
          with open("datosAcelerometro.csv","a") as f: 
             f.write(val2)
         #with open("datosAcelerometro.txt","a") as f: 
             #f.write(val)
-            
+         
+         #Actualizamos tiempo:
          tiempoActual = time.time()
      
+     # Procesamos los datos:
+     #  1) los pasamos a numpy arrays
+     #  2) extraemos la media y desv. tip.
      npAX = np.array(AcelX).astype(np.float)
      npAY = np.array(AcelY).astype(np.float)
      npAZ = np.array(AcelZ).astype(np.float)
