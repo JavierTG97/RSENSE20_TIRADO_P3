@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
+plt.style.use('ggplot')
 
 #---------------- FUNCION PARA LEER Y GUARDAR VALORES ---------------- 
 def cogerValoresyEscribirlos():   
@@ -19,7 +20,7 @@ def cogerValoresyEscribirlos():
 
 
  #---------------- FUNCION PARA PLOTEAR ----------------        
-def plotear(i, temp, AcelX, AcelY, AcelZ, Anorma):
+def plotear(i, temp, AcelXmean, AcelYmean, AcelZmean, Anormamean):
     tiempoInicio = time.time()
     tiempoActual = tiempoInicio
     
@@ -37,25 +38,31 @@ def plotear(i, temp, AcelX, AcelY, AcelZ, Anorma):
             i=i+1
             #Cargamos los últimos datos en la variable df 
             df = pd.read_csv("datosAcelerometro.csv", sep=';')
-            #Calculamos medias y varianzas
-            AcelX.append(df["AcelX"].mean())
-            #df["AcelX"].var()
-            AcelY.append(df["AcelY"].mean())
-            AcelZ.append(df["AcelZ"].mean())
             
+            #Calculamos medias actualizadas:
+            AcelXmean.append(df["AcelX"].mean()); AcelYmean.append(df["AcelY"].mean())
+            AcelZmean.append(df["AcelZ"].mean()); Anormamean.append(df["Norma"].mean())
+            
+            #Calculamos Desviaciones tipicas actualizadas:
+            AcelXstd.append(df["AcelX"].std());   AcelYstd.append(df["AcelY"].std())
+            AcelZstd.append(df["AcelZ"].std());   Anormastd.append(df["Norma"].std())
+            
+            #Actualizamos eje X común
             temp.append(tiempoActual)
             
-            #Dibujamos 
+            #Limpiamos la gráfica anterior para plotear una encima sin problemas:
             ax.clear()
-            ax.plot(temp, AcelX, label="AcelX media (en g)")
-            ax.plot(temp, AcelY, label="AcelY media (en g)")
+            
+            #Ploteamos gráficas:
+            ax.plot(temp, AcelXmean, label="Media")
+            ax.plot(temp, AcelXstd, label="Desviación típica")
             
             # Format plot
             #plt.xticks(rotation=45, ha='right')
             #plt.subplots_adjust(bottom=0.30)
-            plt.title('Aceleración en X')
-            plt.ylabel('Valor (g)')
-            plt.xlabel('tiempo')
+            plt.title('Aceleración en X', fontsize=12, fontweight='bold')
+            plt.ylabel('Valor [g]', fontsize=12, fontweight='bold', color='k')
+            plt.xlabel('Tiempo [s]', fontsize=12, fontweight='bold', color='k')
             plt.legend()
             #plt.axis([1, None, 0, 1.1]) #Use for arbitrary number of trials
             #plt.axis([1, 100, 0, 1.1]) #Use for 100 trial demo
@@ -121,7 +128,7 @@ tiempoTomadeDatos = 5.0 #segundos
 
 #Capturamos datos durante (tiempoTomadeDatos) segundos:
 # fargs = (temp, AcelXmean, AcelYmean, AcelZmean, Anormamean),        
-ani = animation.FuncAnimation(fig, plotear,  interval=0)
+ani = animation.FuncAnimation(fig, plotear, fargs = (temp, AcelXmean, AcelYmean, AcelZmean, Anormamean),  interval=0)
 plt.show()
  
 #SerialArduino.close()    
