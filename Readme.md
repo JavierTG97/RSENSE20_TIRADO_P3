@@ -15,4 +15,10 @@
 * [Documentación de MatplotLib](https://matplotlib.org/api/animation_api.html)
 * [Lista de vídeos de SerialPy (WaveShapeDisplay)](https://www.youtube.com/playlist?list=PLb1SYTph-GZJb1CFM7ioVY9XJYlPVUBQy)
 
+### Gráficas obtenidas con el último ejercicio:
 
+![Inicio (reposo)](https://github.com/JavierTG97/RSENSE20_TIRADO_P3/blob/master/Im%C3%A1genes/Inicio.png?raw=true)
+
+![Cambios](https://github.com/JavierTG97/RSENSE20_TIRADO_P3/blob/master/Im%C3%A1genes/Alteracion.png?raw=true)
+
+![Vuelta al reposo](https://github.com/JavierTG97/RSENSE20_TIRADO_P3/blob/master/Im%C3%A1genes/Reposo.png?raw=true)
